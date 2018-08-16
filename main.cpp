@@ -13,30 +13,29 @@ using namespace std;
 /*
  * 
  */
-int main ( int argc, char** argv )
+int main(int argc, char **argv)
 {
     // Parse the input.
-    if ( argc < 3 )
-    {   
-        cout<<"Missing arguments\n";
-        cout<<"Correct format : \n";
+    if (argc < 3)
+    {
+        cout << "Missing arguments\n";
+        cout << "Correct format : \n";
         cout << "./main <input_filename> <output_filename>";
-        exit ( 0 );
+        exit(0);
     }
-    string inputfilename ( argv[1] );
-    
+    string inputfilename(argv[1]);
+
     // Initialize the conference organizer.
-    SessionOrganizer *organizer  = new SessionOrganizer( inputfilename );
+    SessionOrganizer *organizer = new SessionOrganizer(inputfilename);
 
     // Organize the papers into tracks based on similarity.
-    organizer->organizePapers ( );
+    organizer->organizePapers();
 
-    organizer->printSessionOrganiser ( argv[2]);
+    organizer->printSessionOrganiser(argv[2]);
 
     // Score the organization against the gold standard.
-    double score = organizer->scoreOrganization ( );
-    cout<< "score:"<<score<<endl;
+    double score = organizer->scoreOrganization();
+    cout << "score:" << score << endl;
 
     return 0;
 }
-

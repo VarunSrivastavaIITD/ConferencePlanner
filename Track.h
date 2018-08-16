@@ -6,8 +6,7 @@
  */
 
 #ifndef TRACK_H
-#define	TRACK_H
-
+#define TRACK_H
 
 #include "Session.h"
 
@@ -18,20 +17,21 @@
  *
  */
 
-class Track {
-private:
+class Track
+{
+  private:
     Session *sessions;
     int sessionsInTrack;
-public:
+
+  public:
     Track();
-    
+
     /**
      * Constructor : Creates Track with given number of Sessions
      * 
      */
     Track(int sessionsInTrack);
-    
-    
+
     /**
      * Set the paper at the slot index to the specified paper id number.
      * 
@@ -40,16 +40,14 @@ public:
      * @param paperId is the id number of the paper.
      */
     void setPaper(int sessionIndex, int paperIndex, int paperId);
-    
-    
+
     /**
      * Get the number of sessions in the track.
      * 
      * @return the number of sessions in the track.
      */
     int getNumberOfSessions();
-    
-    
+
     /**
      * Get a specified session.
      * 
@@ -57,8 +55,7 @@ public:
      * @return the session at the index.
      */
     Session getSession(int index);
-    
-    
+
     /**
      * Set the session at the specified index to the new session.
      * 
@@ -68,5 +65,4 @@ public:
     void setSession(int index, Session session);
 };
 
-#endif	/* TRACK_H */
-
+#endif /* TRACK_H */

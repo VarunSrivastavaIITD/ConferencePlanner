@@ -5,7 +5,7 @@
  */
 
 #ifndef SESSION_H
-#define	SESSION_H
+#define SESSION_H
 
 #include <iostream>
 #include <cstdlib>
@@ -18,17 +18,16 @@ using namespace std;
  *
  */
 
-class Session {
-    
-private:    
-    int *papers;            // array of paper    
-    int papersInSession;    // number of papers
-    
-    
-public:
+class Session
+{
+
+  private:
+    int *papers;         // array of paper
+    int papersInSession; // number of papers
+
+  public:
     Session();
-    
-    
+
     /**
      * Constructor
      * 
@@ -42,7 +41,6 @@ public:
      * @param papersInSession the number of papers in a session.
      */
     void initPapers(int papersInSession);
-
 
     /**
      * Get the number of papers in a session.
@@ -74,5 +72,4 @@ public:
     void printSession();
 };
 
-#endif	/* SESSION_H */
-
+#endif /* SESSION_H */
