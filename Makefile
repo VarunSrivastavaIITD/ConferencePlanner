@@ -1,2 +1,22 @@
- all: main.cpp Track.cpp Session.cpp Conference.cpp SessionOrganizer.cpp
-	  g++ -o main main.cpp Track.cpp Session.cpp Conference.cpp SessionOrganizer.cpp
+PROGNAME = main
+LIBS = -pthread
+INCLUDES = -I/usr/local/include
+LDFLAGS = -L./
+OBJECTS = main.o Conference.o Session.o SessionOrganizer.o Track.o
+
+CFLAGS = -W -Wall -O2 -ggdb
+
+all: $(PROGNAME)
+
+$(PROGNAME): $(OBJECTS)
+	@mkdir -p bin
+	g++ -o bin/$(PROGNAME) build/*.o $(LIBS) $(INCLUDES) $(LDFLAGS)
+
+$(OBJECTS): Makefile
+
+%.o: %.cpp
+	@mkdir -p build
+	g++ -c $(CFLAGS) $(INCLUDES) -o build/$@ $<
+
+clean:
+	rm -rf build *.o $(PROGNAME)
