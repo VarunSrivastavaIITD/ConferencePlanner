@@ -37,5 +37,7 @@ int main(int argc, char **argv)
     double score = organizer->scoreOrganization();
     cout << "score:" << score << endl;
 
+    delete organizer;
+
     return 0;
 }
