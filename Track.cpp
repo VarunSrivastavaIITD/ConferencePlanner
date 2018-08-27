@@ -8,11 +8,6 @@
 
 #include "Track.h"
 
-Track::Track()
-{
-    this->sessionsInTrack = 0;
-}
-
 Track::Track(int sessionsInTrack)
 {
     this->sessionsInTrack = sessionsInTrack;
