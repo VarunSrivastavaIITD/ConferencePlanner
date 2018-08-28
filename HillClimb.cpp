@@ -74,8 +74,9 @@ State HillClimb::random_initialize(int seed = 0)
     return random_state
 }
 
-void HillClimb::update_state(int index_a, int index_b, State state)
-{
+void HillClimb::update_state(int index_a, int index_b, State state){
+    int a = state[index_a];
+    int b = state[index_b];
     int temp = state[index_a];
     int session_seq_a = (index_a + papers_in_session) / papers_in_session - 1;
     int session_seq_b = (index_b + papers_in_session) / papers_in_session - 1;
@@ -87,9 +88,11 @@ void HillClimb::update_state(int index_a, int index_b, State state)
     session_distance_matrix[b][session_seq_a] -= distance_matrix[a][b];
 }
 
-double HillClimb::score_increment(int index_a, int a, int index_b, int b) const
+double HillClimb::score_increment(int index_a, int index_b, State state) const
 {
     double change = 0;
+    int a = state[index_a];
+    int b = state[index_b];
     int session_seq_a = (index_a + papers_in_session)/papers_in_session - 1;
     int session_seq_b = (index_b + papers_in_session)/papers_in_session - 1;
     int papers_in_time_slot = papers_in_session*parallel_tracks;
