@@ -67,10 +67,11 @@ void HillClimb::random_initialize()
 {
 }
 
-void HillClimb::updateState(int index_a, int index_b, State state){
+void HillClimb::update_state(int index_a, int index_b, State state)
+{
     int temp = state[index_a];
-    int session_seq_a = (index_a + papers_in_session)/papers_in_session - 1;
-    int session_seq_b = (index_b + papers_in_session)/papers_in_session - 1;
+    int session_seq_a = (index_a + papers_in_session) / papers_in_session - 1;
+    int session_seq_b = (index_b + papers_in_session) / papers_in_session - 1;
     state[index_a] = state[index_b];
     state[index_b] = temp;
     session_distance_matrix[a][session_seq_a] += distance_matrix[a][b];
