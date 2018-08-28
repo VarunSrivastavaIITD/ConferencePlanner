@@ -25,9 +25,9 @@ HillClimb::HillClimb(double **matrix, int p, int t, int k, State state)
 
 void HillClimb::construct_session_matrix()
 {
-    session_distance_matrix.resize(sessions_in_track);
+    session_distance_matrix.resize(sessions_in_track * parallel_tracks * papers_in_session);
     for (auto &v : session_distance_matrix)
-        v.resize(parallel_tracks);
+        v.resize(parallel_tracks * sessions_in_track);
 
     if (!initial_state.empty())
     {
