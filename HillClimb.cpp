@@ -145,13 +145,13 @@ State HillClimb::hill_climb(bool random_init, double duration, const int seed = 
             state = greedy_initialize();
         construct_session_matrix(state);
 
-        for (int cnt = 0; cnt != n / 10 && secs.count() < duration; ++cnt)
+        for (int cnt = 0; cnt != n && secs.count() < duration; ++cnt)
         {
             auto pair = next_state(rng);
             auto index_a = pair.first;
             auto index_b = pair.second;
-            double score = 0;
-            if ((score = score_increment(index_a, index_b, state)) > 0)
+            double score = score_increment(index_a, index_b, state);
+            if (score > 0)
             {
                 update_state(index_a, index_b, state);
                 if (best_score < score)
