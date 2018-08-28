@@ -26,9 +26,9 @@ void HillClimb::construct_session_matrix(State initial_state)
 
     auto sessions = state_to_sessions(initial_state);
 
-    for (auto i = 0; i != session_distance_matrix.size(); ++i)
+    for (size_t i = 0; i != session_distance_matrix.size(); ++i)
     {
-        for (auto j = 0; j != sessions.size(); ++j)
+        for (size_t j = 0; j != sessions.size(); ++j)
         {
             auto dist = 0.0;
             for (const auto &e : sessions[j])
@@ -62,7 +62,12 @@ State HillClimb::random_initialize(int seed = 0)
 
     std::mt19937_64 rng(seed);
     std::shuffle(random_state.begin(), random_state.end(), rng);
-    return random_state
+    return random_state;
+}
+
+State HillClimb::next_state()
+{
+    return State()
 }
 
 void HillClimb::update_state(int index_a, int index_b, State state)
@@ -97,7 +102,7 @@ double HillClimb::score_increment(int index_a, int index_b, State state) const
     {
         change = (trade_of_coefficient + 1) * (session_distance_matrix[a][session_seq_a] + session_distance_matrix[b][session_seq_b] - session_distance_matrix[a][session_seq_b] - session_distance_matrix[b][session_seq_a] + 2 * distance_matrix[a][b]);
 
-        for (int i = 0; i < p; ++i)
+        for (int i = 0; i < parallel_tracks; ++i)
             change += trade_of_coefficient * (session_distance_matrix[a][time_slot_b * parallel_tracks + i] + session_distance_matrix[b][time_slot_a * parallel_tracks + i] - session_distance_matrix[a][time_slot_a * parallel_tracks + i] - session_distance_matrix[b][time_slot_b * parallel_tracks + i]);
     }
 

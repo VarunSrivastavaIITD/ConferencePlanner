@@ -28,6 +28,7 @@ private:
   // Initialization Schemes
   State random_initialize(int);
   State greedy_initialize();
+  State next_state();
 
   std::vector<std::vector<int>> state_to_sessions(State);
 
@@ -38,11 +39,11 @@ public:
   // Main hill climb algorithm
   State hill_climb(bool);
 
-    // Increment in score when going from state 1 to state 2 by single swap
-    double score_increment(int, int, State) const;
+  // Increment in score when going from state 1 to state 2 by single swap
+  double score_increment(int, int, State) const;
 
-    //Update state and session distance matrix after single swap
-    void update_state(int, int, State);
+  //Update state and session distance matrix after single swap
+  void update_state(int, int, State);
 };
 
 #endif
