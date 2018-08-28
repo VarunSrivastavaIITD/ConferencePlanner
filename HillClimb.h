@@ -43,7 +43,7 @@ public:
   double score_increment(int, int, State) const;
 
   //Update state and session distance matrix after single swap
-  void update_state(int, int, State);
+  void update_state(int, int, State&);
 };
 
 #endif

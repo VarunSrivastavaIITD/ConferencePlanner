@@ -6,6 +6,7 @@
 
 #include "SessionOrganizer.h"
 #include "Util.h"
+#include "HillClimb.h"
 
 SessionOrganizer::SessionOrganizer()
 {
@@ -24,6 +25,8 @@ SessionOrganizer::SessionOrganizer(string filename)
 
 void SessionOrganizer::organizePapers()
 {
+    HillClimb hill_climb(distanceMatrix, parallelTracks, sessionsInTrack, papersInSession, tradeoffCoefficient);
+    auto state = hill_climb.hill_climb(true);
     int paperCounter = 0;
     for (int i = 0; i < conference->getSessionsInTrack(); i++)
     {
@@ -31,7 +34,7 @@ void SessionOrganizer::organizePapers()
         {
             for (int k = 0; k < conference->getPapersInSession(); k++)
             {
-                conference->setPaper(j, i, k, paperCounter);
+                conference->setPaper(j, i, k, state[paperCounter]);
                 paperCounter++;
             }
         }
