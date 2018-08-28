@@ -4,6 +4,9 @@
  *
  */
 
+#include <algorithm>
+#include <numeric>
+#include <random>
 #include "HillClimb.h"
 
 HillClimb::HillClimb(double **matrix, int p, int t, int k, int c)
@@ -56,12 +59,19 @@ std::vector<std::vector<int>> HillClimb::state_to_sessions(State state)
     return blocks;
 }
 
-void HillClimb::greedy_initialize()
+State HillClimb::greedy_initialize()
 {
+    return State();
 }
 
-void HillClimb::random_initialize()
+State HillClimb::random_initialize(int seed = 0)
 {
+    State random_state(parallel_tracks * sessions_in_track * papers_in_session);
+    std::iota(random_state.begin(), random_state.end(), 0);
+
+    std::mt19937_64 rng(seed);
+    std::shuffle(random_state.begin(), random_state.end(), rng);
+    return random_state
 }
 
 void HillClimb::update_state(int index_a, int index_b, State state)
