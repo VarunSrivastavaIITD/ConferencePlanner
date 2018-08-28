@@ -4,7 +4,7 @@ INCLUDES = -I/usr/local/include
 LDFLAGS = -L./
 OBJECTS = main.o Conference.o Session.o SessionOrganizer.o Track.o HillClimb.o
 
-CFLAGS = -W -Wall -O0 -ggdb -std=c++11 -pedantic
+CFLAGS = -Wall -Wextra -O0 -ggdb -std=c++11 -pedantic
 
 all: $(PROGNAME)
 
