@@ -8,7 +8,11 @@
 #include <numeric>
 #include <random>
 #include <utility>
+#include <chrono>
 #include "HillClimb.h"
+
+typedef std::chrono::high_resolution_clock Time;
+typedef std::chrono::duration<double> double_seconds;
 
 HillClimb::HillClimb(double **matrix, int p, int t, int k, int c)
 {
@@ -115,4 +119,54 @@ double HillClimb::score_increment(int index_a, int index_b, State state) const
     }
 
     return change;
+}
+
+State HillClimb::hill_climb(bool random_init, double duration, const int seed = 0)
+{
+    duration *= 60; // Assumed in minutes originally
+    auto initial_time = Time::now();
+    decltype(initial_time) now;
+    decltype(now - initial_time) dur;
+    decltype(std::chrono::duration_cast<double_seconds>(dur)) secs;
+
+    State state, best_state;
+    auto n = parallel_tracks * sessions_in_track * papers_in_session;
+
+    std::default_random_engine rng;
+    rng.seed(seed);
+
+    double best_score = 0;
+
+    while (secs.count() < duration)
+    {
+        if (random_init)
+            state = random_initialize(rng);
+        else
+            state = greedy_initialize();
+        construct_session_matrix(state);
+
+        for (int cnt = 0; cnt != n / 10 && secs.count() < duration; ++cnt)
+        {
+            auto pair = next_state(rng);
+            auto index_a = pair.first;
+            auto index_b = pair.second;
+            double score = 0;
+            if ((score = score_increment(index_a, index_b, state)) > 0)
+            {
+                update_state(index_a, index_b, state);
+                if (best_score < score)
+                {
+                    best_score = score;
+                    best_state = state;
+                }
+                cnt = 0;
+            }
+
+            now = Time::now();
+            dur = now - initial_time;
+            secs = std::chrono::duration_cast<double_seconds>(dur);
+        }
+    };
+
+    return best_state;
 }

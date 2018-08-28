@@ -26,8 +26,9 @@ SessionOrganizer::SessionOrganizer(string filename)
 
 void SessionOrganizer::organizePapers()
 {
+    const int ANSWER_TO_THE_UNIVERSE = 42;
     HillClimb hill_climb(distanceMatrix, parallelTracks, sessionsInTrack, papersInSession, tradeoffCoefficient);
-    auto state = hill_climb.hill_climb(true);
+    auto state = hill_climb.hill_climb(true, processingTimeInMinutes * 0.95, ANSWER_TO_THE_UNIVERSE);
     int paperCounter = 0;
     for (int i = 0; i < conference->getSessionsInTrack(); i++)
     {
@@ -40,6 +41,7 @@ void SessionOrganizer::organizePapers()
             }
         }
     }
+    return;
 }
 
 void SessionOrganizer::readInInputFile(string filename)

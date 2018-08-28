@@ -9,6 +9,7 @@
 
 #include <vector>
 #include <utility>
+#include <random>
 
 using std::vector;
 using State = vector<int>;
@@ -38,7 +39,7 @@ public:
   HillClimb(double **, int, int, int, int);
 
   // Main hill climb algorithm
-  State hill_climb(bool);
+  State hill_climb(bool, double, const int);
 
   // Increment in score when going from state 1 to state 2 by single swap
   double score_increment(int, int, State) const;
