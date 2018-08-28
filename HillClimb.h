@@ -29,6 +29,8 @@ class HillClimb
     void random_initialize();
     void greedy_initialize();
 
+    std::vector<std::vector<int>> state_to_sessions(State);
+
   public:
     // Constructors
     HillClimb(double **, int, int, int);

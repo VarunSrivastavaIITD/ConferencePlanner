@@ -29,9 +29,31 @@ void HillClimb::construct_session_matrix()
     for (auto &v : session_distance_matrix)
         v.resize(parallel_tracks * sessions_in_track);
 
-    if (!initial_state.empty())
+    auto sessions = state_to_sessions(initial_state);
+
+    for (auto i = 0; i != session_distance_matrix.size(); ++i)
     {
+        for (auto j = 0; j != sessions.size(); ++j)
+        {
+            auto dist = 0.0;
+            for (const auto &e : sessions[j])
+            {
+                dist += distance_matrix[i][e];
+            }
+            session_distance_matrix[i][j] = dist;
         }
+    }
+}
+
+std::vector<std::vector<int>> HillClimb::state_to_sessions(State state)
+{
+    std::vector<std::vector<int>> blocks;
+    for (const auto &row : state)
+    {
+        for (auto it = row.cbegin(); it != row.cend(); it += papers_in_session)
+            blocks.push_back(std::vector<int>(it, it + papers_in_session));
+    }
+    return blocks;
 }
 
 void HillClimb::greedy_initialize()
