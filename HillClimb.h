@@ -10,7 +10,7 @@
 #include <vector>
 
 using std::vector;
-using State = vector<vector<int>>;
+using State = vector<int>;
 
 class HillClimb
 {
@@ -22,13 +22,12 @@ private:
   double trade_of_coefficient;
 
   vector<vector<double>> session_distance_matrix;
-  State initial_state;
 
-  void construct_session_matrix();
+  void construct_session_matrix(State);
 
   // Initialization Schemes
-  void random_initialize(int);
-  void greedy_initialize();
+  State random_initialize(int);
+  State greedy_initialize();
 
   std::vector<std::vector<int>> state_to_sessions(State);
 

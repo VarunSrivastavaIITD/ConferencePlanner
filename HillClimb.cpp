@@ -13,20 +13,18 @@ HillClimb::HillClimb(double **matrix, int p, int t, int k, int c)
     sessions_in_track = t;
     papers_in_session = k;
     trade_of_coefficient = c;
-
 }
 
-HillClimb::HillClimb(double **matrix, int p, int t, int k, int c, State state)
+HillClimb::HillClimb(double **matrix, int p, int t, int k, int c)
 {
     distance_matrix = matrix;
     parallel_tracks = p;
     sessions_in_track = t;
     papers_in_session = k;
     trade_of_coefficient = c;
-    initial_state = state;
 }
 
-void HillClimb::construct_session_matrix()
+void HillClimb::construct_session_matrix(State initial_state)
 {
     session_distance_matrix.resize(sessions_in_track * parallel_tracks * papers_in_session);
     for (auto &v : session_distance_matrix)
@@ -51,11 +49,10 @@ void HillClimb::construct_session_matrix()
 std::vector<std::vector<int>> HillClimb::state_to_sessions(State state)
 {
     std::vector<std::vector<int>> blocks;
-    for (const auto &row : state)
-    {
-        for (auto it = row.cbegin(); it != row.cend(); it += papers_in_session)
-            blocks.push_back(std::vector<int>(it, it + papers_in_session));
-    }
+
+    for (auto it = state.cbegin(); it != state.cend(); it += papers_in_session)
+        blocks.push_back(std::vector<int>(it, it + papers_in_session));
+
     return blocks;
 }
 
