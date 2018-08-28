@@ -33,6 +33,7 @@ private:
   std::pair<int, int> next_state(std::default_random_engine &);
 
   std::vector<std::vector<int>> state_to_sessions(State);
+  double score(State);
 
 public:
   // Constructors

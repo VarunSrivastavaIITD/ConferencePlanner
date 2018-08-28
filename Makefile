@@ -4,13 +4,13 @@ INCLUDES = -I/usr/local/include
 LDFLAGS = -L./
 OBJECTS = main.o Conference.o Session.o SessionOrganizer.o Track.o HillClimb.o
 
-CFLAGS = -Wall -Wextra -O0 -ggdb -std=c++11 -pedantic
+CFLAGS = -Wall -Wextra -Ofast -DNDEBUG -std=c++11 -pedantic
 
 all: $(PROGNAME)
 
 $(PROGNAME): $(OBJECTS)
 	@mkdir -p bin
-	g++ -o bin/$(PROGNAME) build/*.o $(LIBS) $(INCLUDES) $(LDFLAGS)
+	g++ -Ofast -DNDEBUG -o bin/$(PROGNAME) build/*.o $(LIBS) $(INCLUDES) $(LDFLAGS)
 
 $(OBJECTS): Makefile
 

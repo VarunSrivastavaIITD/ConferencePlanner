@@ -26,9 +26,9 @@ SessionOrganizer::SessionOrganizer(string filename)
 
 void SessionOrganizer::organizePapers()
 {
-    const int ANSWER_TO_THE_UNIVERSE = 42;
+    const int ANSWER_TO_THE_UNIVERSE = 43;
     HillClimb hill_climb(distanceMatrix, parallelTracks, sessionsInTrack, papersInSession, tradeoffCoefficient);
-    auto state = hill_climb.hill_climb(true, processingTimeInMinutes * 0.95, ANSWER_TO_THE_UNIVERSE);
+    auto state = hill_climb.hill_climb(true, processingTimeInMinutes * 1, ANSWER_TO_THE_UNIVERSE);
     int paperCounter = 0;
     for (int i = 0; i < conference->getSessionsInTrack(); i++)
     {
@@ -86,7 +86,8 @@ void SessionOrganizer::readInInputFile(string filename)
     for (int i = 0; i < n; i++)
     {
         string tempLine = lines[i + 5];
-        std::vector<string> elements(n);
+        // std::vector<string> elements(n);
+        string elements[n];
         splitString(tempLine, " ", elements, n);
 
         for (int j = 0; j < n; j++)
