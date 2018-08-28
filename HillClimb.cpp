@@ -18,15 +18,6 @@ HillClimb::HillClimb(double **matrix, int p, int t, int k, int c)
     trade_of_coefficient = c;
 }
 
-HillClimb::HillClimb(double **matrix, int p, int t, int k, int c)
-{
-    distance_matrix = matrix;
-    parallel_tracks = p;
-    sessions_in_track = t;
-    papers_in_session = k;
-    trade_of_coefficient = c;
-}
-
 void HillClimb::construct_session_matrix(State initial_state)
 {
     session_distance_matrix.resize(sessions_in_track * parallel_tracks * papers_in_session);
@@ -74,7 +65,8 @@ State HillClimb::random_initialize(int seed = 0)
     return random_state
 }
 
-void HillClimb::update_state(int index_a, int index_b, State state){
+void HillClimb::update_state(int index_a, int index_b, State state)
+{
     int a = state[index_a];
     int b = state[index_b];
     int temp = state[index_a];
@@ -93,32 +85,20 @@ double HillClimb::score_increment(int index_a, int index_b, State state) const
     double change = 0;
     int a = state[index_a];
     int b = state[index_b];
-    int session_seq_a = (index_a + papers_in_session)/papers_in_session - 1;
-    int session_seq_b = (index_b + papers_in_session)/papers_in_session - 1;
-    int papers_in_time_slot = papers_in_session*parallel_tracks;
-    int time_slot_a = (index_a+papers_in_time_slot)/(papers_in_time_slot)-1;
-    int time_slot_b = (index_b+papers_in_time_slot)/(papers_in_time_slot)-1;
-    if(time_slot_a == time_slot_b)
-        change = (trade_of_coefficient+1)*(session_distance_matrix[a][session_seq_a] 
-                                          +session_distance_matrix[b][session_seq_b] 
-                                          -session_distance_matrix[a][session_seq_b]
-                                          -session_distance_matrix[b][session_seq_a]
-                                          -2*distance_matrix[a][b]);
-                    
+    int session_seq_a = (index_a + papers_in_session) / papers_in_session - 1;
+    int session_seq_b = (index_b + papers_in_session) / papers_in_session - 1;
+    int papers_in_time_slot = papers_in_session * parallel_tracks;
+    int time_slot_a = (index_a + papers_in_time_slot) / (papers_in_time_slot)-1;
+    int time_slot_b = (index_b + papers_in_time_slot) / (papers_in_time_slot)-1;
+    if (time_slot_a == time_slot_b)
+        change = (trade_of_coefficient + 1) * (session_distance_matrix[a][session_seq_a] + session_distance_matrix[b][session_seq_b] - session_distance_matrix[a][session_seq_b] - session_distance_matrix[b][session_seq_a] - 2 * distance_matrix[a][b]);
 
-    else{
-        change = (trade_of_coefficient+1)*(session_distance_matrix[a][session_seq_a]
-                 +session_distance_matrix[b][session_seq_b]
-                 -session_distance_matrix[a][session_seq_b]
-                 -session_distance_matrix[b][session_seq_a]
-                 +2*distance_matrix[a][b]);
+    else
+    {
+        change = (trade_of_coefficient + 1) * (session_distance_matrix[a][session_seq_a] + session_distance_matrix[b][session_seq_b] - session_distance_matrix[a][session_seq_b] - session_distance_matrix[b][session_seq_a] + 2 * distance_matrix[a][b]);
 
-        for(int i=0;i<p;++i)
-            change += trade_of_coefficient*(session_distance_matrix[a][time_slot_b*parallel_tracks+i]
-                                           +session_distance_matrix[b][time_slot_a*parallel_tracks+i]
-                                           -session_distance_matrix[a][time_slot_a*parallel_tracks+i]
-                                           -session_distance_matrix[b][time_slot_b*parallel_tracks+i]);
-        
+        for (int i = 0; i < p; ++i)
+            change += trade_of_coefficient * (session_distance_matrix[a][time_slot_b * parallel_tracks + i] + session_distance_matrix[b][time_slot_a * parallel_tracks + i] - session_distance_matrix[a][time_slot_a * parallel_tracks + i] - session_distance_matrix[b][time_slot_b * parallel_tracks + i]);
     }
 
     return change;

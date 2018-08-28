@@ -34,7 +34,6 @@ private:
 public:
   // Constructors
   HillClimb(double **, int, int, int, int);
-  HillClimb(double **, int, int, int, int, State);
 
   // Main hill climb algorithm
   State hill_climb(bool);
