@@ -7,6 +7,8 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+#include <vector>
+
 /**
  * Utility Function to split string message, using give delimiter. The result is stored in result[] array.
  * 
@@ -15,7 +17,7 @@
  * @param result result will be stored in this array
  * @param expcted length of the result
  */
-void splitString(string message, string delimiter, string result[], int n)
+void splitString(string message, string delimiter, std::vector<string> result, int n)
 {
     int i = 0, pos = 0, length = 0, temp;
     temp = message.find(delimiter.c_str(), pos);

@@ -7,6 +7,7 @@
 #include "SessionOrganizer.h"
 #include "Util.h"
 #include "HillClimb.h"
+#include <vector>
 
 SessionOrganizer::SessionOrganizer()
 {
@@ -83,7 +84,7 @@ void SessionOrganizer::readInInputFile(string filename)
     for (int i = 0; i < n; i++)
     {
         string tempLine = lines[i + 5];
-        string elements[n];
+        std::vector<string> elements(n);
         splitString(tempLine, " ", elements, n);
 
         for (int j = 0; j < n; j++)
