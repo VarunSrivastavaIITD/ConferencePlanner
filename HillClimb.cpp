@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <numeric>
 #include <random>
+#include <utility>
 #include "HillClimb.h"
 
 HillClimb::HillClimb(double **matrix, int p, int t, int k, int c)
@@ -55,19 +56,27 @@ State HillClimb::greedy_initialize()
     return State();
 }
 
-State HillClimb::random_initialize(int seed = 0)
+State HillClimb::random_initialize(std::default_random_engine &rng)
 {
     State random_state(parallel_tracks * sessions_in_track * papers_in_session);
     std::iota(random_state.begin(), random_state.end(), 0);
 
-    std::mt19937_64 rng(seed);
     std::shuffle(random_state.begin(), random_state.end(), rng);
     return random_state;
 }
 
-State HillClimb::next_state()
+std::pair<int, int> HillClimb::next_state(std::default_random_engine &rng)
 {
-    return State();
+    std::uniform_int_distribution<std::default_random_engine::result_type> dist(0, papers_in_session * parallel_tracks * sessions_in_track - 1);
+
+    int i, j;
+    do
+    {
+        i = dist(rng);
+        j = dist(rng);
+    } while (((i + papers_in_session) / papers_in_session) == ((j + papers_in_session) / papers_in_session));
+
+    return std::make_pair(i, j);
 }
 
 void HillClimb::update_state(int index_a, int index_b, State &state)

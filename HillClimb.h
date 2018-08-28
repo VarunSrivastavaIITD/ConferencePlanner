@@ -8,6 +8,7 @@
 #define HILLCLIMB_H
 
 #include <vector>
+#include <utility>
 
 using std::vector;
 using State = vector<int>;
@@ -26,9 +27,9 @@ private:
   void construct_session_matrix(State);
 
   // Initialization Schemes
-  State random_initialize(int);
+  State random_initialize(std::default_random_engine &);
   State greedy_initialize();
-  State next_state();
+  std::pair<int, int> next_state(std::default_random_engine &);
 
   std::vector<std::vector<int>> state_to_sessions(State);
 
@@ -43,7 +44,7 @@ public:
   double score_increment(int, int, State) const;
 
   //Update state and session distance matrix after single swap
-  void update_state(int, int, State&);
+  void update_state(int, int, State &);
 };
 
 #endif
