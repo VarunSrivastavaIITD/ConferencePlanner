@@ -104,11 +104,11 @@ double HillClimb::score_increment(int index_a, int index_b, State state) const
     int time_slot_a = ((index_a + papers_in_time_slot) / papers_in_time_slot) - 1;
     int time_slot_b = ((index_b + papers_in_time_slot) / papers_in_time_slot) - 1;
     if (time_slot_a == time_slot_b)
-        change = (trade_of_coefficient + 1) * (session_distance_matrix[a][session_seq_a] + session_distance_matrix[b][session_seq_b] - session_distance_matrix[a][session_seq_b] - session_distance_matrix[b][session_seq_a] - 2 * distance_matrix[a][b]);
+        change = (trade_of_coefficient + 1) * (session_distance_matrix[a][session_seq_a] + session_distance_matrix[b][session_seq_b] - session_distance_matrix[a][session_seq_b] - session_distance_matrix[b][session_seq_a] + 2 * distance_matrix[a][b]);
 
     else
     {
-        change = (trade_of_coefficient + 1) * (session_distance_matrix[a][session_seq_a] + session_distance_matrix[b][session_seq_b] - session_distance_matrix[a][session_seq_b] - session_distance_matrix[b][session_seq_a] + 2 * distance_matrix[a][b]);
+        change = (trade_of_coefficient + 1) * (session_distance_matrix[a][session_seq_a] + session_distance_matrix[b][session_seq_b] - session_distance_matrix[a][session_seq_b] - session_distance_matrix[b][session_seq_a]) + 2 * distance_matrix[a][b];
 
         for (int i = 0; i < parallel_tracks; ++i)
             change += trade_of_coefficient * (session_distance_matrix[a][time_slot_b * parallel_tracks + i] + session_distance_matrix[b][time_slot_a * parallel_tracks + i] - session_distance_matrix[a][time_slot_a * parallel_tracks + i] - session_distance_matrix[b][time_slot_b * parallel_tracks + i]);
