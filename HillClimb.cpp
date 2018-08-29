@@ -192,7 +192,7 @@ State HillClimb::hill_climb(bool random_init, double duration, const int seed = 
 
     State state, best_state;
     auto n = parallel_tracks * sessions_in_track * papers_in_session;
-    auto count_limit = 2 * static_cast<int>(std::pow(n, 2));
+    auto count_limit = static_cast<int>(std::pow(n, 2));
     rng.seed(seed);
 
     double best_score = 0;
@@ -244,6 +244,5 @@ State HillClimb::hill_climb(bool random_init, double duration, const int seed = 
             best_state = state;
         }
     };
-    std::cout << best_score;
     return best_state;
 }
