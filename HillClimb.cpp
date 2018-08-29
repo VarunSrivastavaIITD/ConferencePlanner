@@ -44,6 +44,7 @@ HillClimb::HillClimb(double **matrix, int p, int t, int k, int c)
     sessions_in_track = t;
     papers_in_session = k;
     trade_of_coefficient = c;
+    dist = std::uniform_int_distribution<std::default_random_engine::result_type>(0, (papers_in_session * parallel_tracks * sessions_in_track) - 1);
 }
 
 void HillClimb::construct_session_matrix(State initial_state)
@@ -86,7 +87,7 @@ State HillClimb::greedy_initialize()
     return State();
 }
 
-State HillClimb::random_initialize(std::default_random_engine &rng)
+State HillClimb::random_initialize()
 {
     State random_state(parallel_tracks * sessions_in_track * papers_in_session);
     std::iota(random_state.begin(), random_state.end(), 0);
@@ -95,10 +96,8 @@ State HillClimb::random_initialize(std::default_random_engine &rng)
     return random_state;
 }
 
-std::pair<int, int> HillClimb::next_state(std::default_random_engine &rng)
+std::pair<int, int> HillClimb::next_state()
 {
-    std::uniform_int_distribution<std::default_random_engine::result_type> dist(0, (papers_in_session * parallel_tracks * sessions_in_track) - 1);
-
     size_t cnt = 0;
     int i, j;
     do
@@ -192,7 +191,6 @@ State HillClimb::hill_climb(bool random_init, double duration, const int seed = 
     State state, best_state;
     auto n = parallel_tracks * sessions_in_track * papers_in_session;
     auto count_limit = static_cast<int>(std::pow(n, 1.5));
-    std::default_random_engine rng;
     rng.seed(seed);
 
     double best_score = 0;
@@ -200,7 +198,7 @@ State HillClimb::hill_climb(bool random_init, double duration, const int seed = 
     while (secs.count() < duration)
     {
         if (random_init)
-            state = random_initialize(rng);
+            state = random_initialize();
         else
             state = greedy_initialize();
         construct_session_matrix(state);
@@ -209,7 +207,7 @@ State HillClimb::hill_climb(bool random_init, double duration, const int seed = 
         double objective_function = score(state);
         for (int cnt = 0; cnt != count_limit && secs.count() < duration; ++cnt)
         {
-            auto pair = next_state(rng);
+            auto pair = next_state();
             auto index_a = pair.first;
             auto index_b = pair.second;
             double score = score_increment(index_a, index_b, state);

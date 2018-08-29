@@ -25,12 +25,15 @@ private:
 
   vector<vector<double>> session_distance_matrix;
 
+  std::default_random_engine rng;
+  std::uniform_int_distribution<std::default_random_engine::result_type> dist;
+
   void construct_session_matrix(State);
 
   // Initialization Schemes
-  State random_initialize(std::default_random_engine &);
+  State random_initialize();
   State greedy_initialize();
-  std::pair<int, int> next_state(std::default_random_engine &);
+  std::pair<int, int> next_state();
 
   std::vector<std::vector<int>> state_to_sessions(State);
   double score(State);
