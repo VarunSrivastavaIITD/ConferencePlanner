@@ -137,7 +137,7 @@ double HillClimb::score_increment(int index_a, int index_b, State state) const
     int papers_in_time_slot = papers_in_session * parallel_tracks;
     int time_slot_a = ((index_a + papers_in_time_slot) / papers_in_time_slot) - 1;
     int time_slot_b = ((index_b + papers_in_time_slot) / papers_in_time_slot) - 1;
-    if(session_seq_a == session_seq_b)
+    if (session_seq_a == session_seq_b)
         return 0;
     else if (time_slot_a == time_slot_b)
         change = (trade_of_coefficient + 1) * (session_distance_matrix[a][session_seq_a] + session_distance_matrix[b][session_seq_b] - session_distance_matrix[a][session_seq_b] - session_distance_matrix[b][session_seq_a] + 2 * distance_matrix[a][b]);
@@ -192,7 +192,7 @@ State HillClimb::hill_climb(bool random_init, double duration, const int seed = 
 
     State state, best_state;
     auto n = parallel_tracks * sessions_in_track * papers_in_session;
-    auto count_limit = static_cast<int>(std::pow(n, 1.5));
+    auto count_limit = 2 * static_cast<int>(std::pow(n, 2));
     rng.seed(seed);
 
     double best_score = 0;
@@ -219,7 +219,18 @@ State HillClimb::hill_climb(bool random_init, double duration, const int seed = 
                 update_state(index_a, index_b, state);
                 cnt = 0;
             }
-            
+            else
+            {
+                double p = std::exp(score * (cnt + 1));
+                bool update = static_cast<bool>(std::bernoulli_distribution(p)(rng));
+
+                if (update)
+                {
+                    accumulated_score += score;
+                    update_state(index_a, index_b, state);
+                }
+            }
+
             now = Time::now();
             dur = now - initial_time;
             secs = std::chrono::duration_cast<double_seconds>(dur);
@@ -233,5 +244,6 @@ State HillClimb::hill_climb(bool random_init, double duration, const int seed = 
             best_state = state;
         }
     };
+    std::cout << best_score;
     return best_state;
 }
