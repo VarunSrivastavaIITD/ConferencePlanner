@@ -230,7 +230,6 @@ State HillClimb::hill_climb(bool random_init, double duration, const int seed = 
         if ((objective_function + accumulated_score) > best_score)
         {
             best_score = objective_function + accumulated_score;
-            std::cout<<"Accumulated score: "<<accumulated_score<<" objective function:"<<objective_function<<std::endl;
             best_state = state;
         }
     };

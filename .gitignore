@@ -6,3 +6,4 @@ callgrind*
 gprof*
 output.txt
 in3.txt
+Makefile1
