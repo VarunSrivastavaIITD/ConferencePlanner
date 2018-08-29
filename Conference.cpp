@@ -98,6 +98,6 @@ void Conference::printConference(char *filename)
         ofile << "\n";
     }
     ofile.close();
-    cout << "Organization written to ";
-    printf("%s :)\n", filename);
+    // cout << "Organization written to ";
+    // printf("%s :)\n", filename);
 }
