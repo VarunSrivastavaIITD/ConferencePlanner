@@ -2,3 +2,7 @@
 build
 bin
 main
+callgrind*
+gprof*
+output.txt
+in3.txt
