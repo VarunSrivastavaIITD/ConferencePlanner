@@ -137,7 +137,9 @@ double HillClimb::score_increment(int index_a, int index_b, State state) const
     int papers_in_time_slot = papers_in_session * parallel_tracks;
     int time_slot_a = ((index_a + papers_in_time_slot) / papers_in_time_slot) - 1;
     int time_slot_b = ((index_b + papers_in_time_slot) / papers_in_time_slot) - 1;
-    if (time_slot_a == time_slot_b)
+    if(session_seq_a == session_seq_b)
+        return 0;
+    else if (time_slot_a == time_slot_b)
         change = (trade_of_coefficient + 1) * (session_distance_matrix[a][session_seq_a] + session_distance_matrix[b][session_seq_b] - session_distance_matrix[a][session_seq_b] - session_distance_matrix[b][session_seq_a] + 2 * distance_matrix[a][b]);
 
     else
@@ -217,7 +219,7 @@ State HillClimb::hill_climb(bool random_init, double duration, const int seed = 
                 update_state(index_a, index_b, state);
                 cnt = 0;
             }
-
+            
             now = Time::now();
             dur = now - initial_time;
             secs = std::chrono::duration_cast<double_seconds>(dur);
@@ -228,10 +230,9 @@ State HillClimb::hill_climb(bool random_init, double duration, const int seed = 
         if ((objective_function + accumulated_score) > best_score)
         {
             best_score = objective_function + accumulated_score;
+            std::cout<<"Accumulated score: "<<accumulated_score<<" objective function:"<<objective_function<<std::endl;
             best_state = state;
         }
     };
-
-    std::cout << best_score << std::endl;
     return best_state;
 }

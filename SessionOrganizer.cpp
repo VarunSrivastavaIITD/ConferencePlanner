@@ -87,13 +87,14 @@ void SessionOrganizer::readInInputFile(string filename)
     {
         string tempLine = lines[i + 5];
         // std::vector<string> elements(n);
-        string elements[n];
+        string* elements = new string[n];
         splitString(tempLine, " ", elements, n);
-
         for (int j = 0; j < n; j++)
         {
             tempDistanceMatrix[i][j] = atof(elements[j].c_str());
         }
+
+        delete[] elements;
     }
     distanceMatrix = tempDistanceMatrix;
 
