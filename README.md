@@ -25,7 +25,10 @@ Our goal is to find a schedule with the maximum goodness.
 
 ## Authors
 
-Varun Srivastava
-varunsrivastava.v@gmail.com
++ Varun Srivastava
+**varunsrivastava.v@gmail.com**
 
-Course Project under Prof. Mausam
++ Madhur Singal
+**hstalk6@gmail.com**
+
+*Course Project under [**Prof. Mausam**](http://homes.cs.washington.edu/~mausam/)*
