@@ -29,6 +29,6 @@ Our goal is to find a schedule with the maximum goodness.
 **varunsrivastava.v@gmail.com**
 
 + Madhur Singal
-**hstalk6@gmail.com**
+**madhursingal08@gmail.com**
 
 *Course Project under [**Prof. Mausam**](http://homes.cs.washington.edu/~mausam/)*
